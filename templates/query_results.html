@@ -1,0 +1,18 @@
+<!-- query_results.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    {% if data %}
+        {{ data | safe }}  <!-- Use the "safe" filter to render HTML content -->
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>
