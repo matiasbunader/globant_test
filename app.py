@@ -17,6 +17,7 @@ mysql_database = os.getenv("MYSQL_DATABASE")
 
 app = Flask(__name__)
 
+
 # MySQL database configuration
 db_config = {
     "host": mysql_host,
@@ -24,6 +25,7 @@ db_config = {
     "password": mysql_password,
     "database": mysql_database,
 }
+
 
 # Establish a connection to the MySQL database using SQLAlchemy
 db_uri = f"mysql+mysqlconnector://{mysql_user}:{mysql_password}@{mysql_host}/{mysql_database}"
@@ -122,22 +124,22 @@ def upload_data():
         return jsonify({"error": str(e)}), 500
 
 
-# Endpoint to display results for requeriment_1
-@app.route('/requeriment_1')
-def show_requeriment_1_results():
+# Endpoint to display results for requirement_1
+@app.route('/requirement_1')
+def show_requirement_1_results():
 
-    df = get_requeriment_results('requeriment_1')
+    df = get_requirement_results('requirement_1')
 
-    return render_template('query_results.html', title='Requeriment 1 Results', data=df.to_html())
+    return render_template('query_results.html', title='requirement 1 Results', data=df.to_html())
 
 
-# Endpoint to display results for requeriment_2
-@app.route('/requeriment_2')
-def show_requeriment_2_results():
+# Endpoint to display results for requirement_2
+@app.route('/requirement_2')
+def show_requirement_2_results():
 
-    df = get_requeriment_results('requeriment_2')
+    df = get_requirement_results('requirement_2')
 
-    return render_template('query_results.html', title='Requeriment 2 Results', data=df.to_html())
+    return render_template('query_results.html', title='requirement 2 Results', data=df.to_html())
 
 
 # Get SQL file path function
@@ -151,10 +153,10 @@ def get_sql_path(sql_file_name):
     return sql_file_path
 
 
-# Show requeriments result function
-def get_requeriment_results(requeriment):
+# Show requirements result function
+def get_requirement_results(requirement):
 
-    sql_path = get_sql_path(f"{requeriment}.sql")
+    sql_path = get_sql_path(f"{requirement}.sql")
 
     with open(sql_path, "r") as file:
         query = file.read()
@@ -173,10 +175,11 @@ def get_requeriment_results(requeriment):
 
     return df
 
+
 # Helper function to check if the file extension is allowed
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() == "csv"
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
